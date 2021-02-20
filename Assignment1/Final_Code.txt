@@ -1,0 +1,33 @@
+//KERNEL_1 for Assignment1
+__global__ void dkernal(int *ga,int *gb,int *gc,int n,int m){
+    int id;
+    id=blockIdx.x*blockDim.x+threadIdx.x;
+    if(id<n){
+          for(int j=0;j<m;j++){
+            gc[id*m+j]=ga[id*m+j]+gb[id*m+j];
+        }  
+    }
+    
+}
+
+//KERNEL_2 for Assignment1
+__global__ void dkernal(int *ga,int *gb,int *gc,int n,int m){
+    int id;
+    id = threadIdx.x + blockDim.x* threadIdx.y +blockDim.x*blockDim.y*blockIdx.x;
+    if(id<m){
+          for(int j=0;j<n;j++){
+            gc[id*n+j]=ga[id*n+j]+gb[id*n+j];
+        }  
+    }
+    
+}
+
+__global__ void dkernal3(int *ga,int *gb,int *gc,int n,int m){
+    int i,j,id;
+    i = threadIdx.x + blockDim.x * threadIdx.y;
+    j = blockIdx.x + gridDim.x * blockIdx.y;
+    id=j*blockDim.x*blockDim.y+i;
+    if(id<(m*n))
+    gc[id]=ga[id]+gb[id];
+    
+}
